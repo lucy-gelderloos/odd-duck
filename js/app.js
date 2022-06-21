@@ -59,17 +59,19 @@ for (let i = 0; i < imageFilesArray.length; i++) {
 }
 
 function generateRandomNumbers() {
+  let prevIndices = [];
   if(indices.length > 0){
-    indices.length = 0;
+    for(let i = 0; i < numVisible; i++){
+      prevIndices.push(indices.pop());
+    }
   }
   for(let i = 0; i < numVisible; i++){
     let index = Math.floor(Math.random() * imageFilesArray.length);
-    while(indices.indexOf(index) !== -1){
+    while(indices.indexOf(index) !== -1 || prevIndices.indexOf(index) !== -1){
       index = Math.floor(Math.random() * imageFilesArray.length);
     }
     indices.push(index);
   }
-  console.log(indices);
 }
 
 function displayImages() {
