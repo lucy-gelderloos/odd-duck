@@ -58,7 +58,7 @@ let views = 0;
 const images = [];
 // let numImages = imageFilesArray.length; //how many images are available
 let numVisible = 3; //how many images to display in each set
-// let indices = [];
+let indices = [];
 let displayImagesArray = [];
 
 const resultsContainer = document.getElementById('results-container');
@@ -93,11 +93,26 @@ for (let i = 0; i < imageFilesArray.length; i++) {
   images.push(new Image(imageFilesArray[i]));
 }
 
+function generateRandomNumbers() {
+  for(let i = 0; i < numVisible; i++){
+    let index = Math.floor(Math.random() * imageFilesArray.length);
+    while(indices.indexOf(index) !== -1){
+      index = Math.floor(Math.random() * imageFilesArray.length);
+    }
+    indices.push(index);
+  }
+  console.log(indices);
+}
+
+generateRandomNumbers();
+
+
 function displayImages() {
   for (let i = 0; i < numVisible; i++){
-    imageElementsArray[i].id = images[i].id;
-    imageElementsArray[i].src = images[i].src;
-    images[i].views++;
+    let index = indices[i];
+    imageElementsArray[i].id = images[index].id;
+    imageElementsArray[i].src = images[index].src;
+    images[index].views++;
   }
   console.log(images);
 }
