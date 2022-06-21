@@ -80,7 +80,6 @@ function displayImages() {
     imageElementsArray[i].src = images[index].src;
     images[index].views++;
   }
-//   console.log(images);
 }
 
 function handleClick(event) {
@@ -89,10 +88,13 @@ function handleClick(event) {
       images[i].clicks++;
     }
     votes++;
-    displayImages();}
+    console.log(images[i].id,images[i].clicks);
+  }
+  displayImages();
 }
 
 startVotingButton.addEventListener('click',function(){
+  // generateRandomNumbers();
   displayImages();
   startVotingButton.classList.add('hidden');
 }
@@ -103,10 +105,10 @@ viewResultsButton.addEventListener('click',function(){
   viewResultsButton.classList.add('hidden');
   for(let i = 0; i < images.length; i++){
     let resultListItem = document.createElement('li');
-    resultListItem.appendChild(document.createTextNode(`${images[i].id} was displayed ${images[i].views} times and received ${images[i].votes} votes`));
+    resultListItem.appendChild(document.createTextNode(`${images[i].id} was displayed ${images[i].views} times and received ${images[i].clicks} votes`));
     resultsList.appendChild(resultListItem);
   }
-  resetButton.classList.remove('hidden');
+  // resetButton.classList.remove('hidden');
 }
 );
 
