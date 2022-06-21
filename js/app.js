@@ -31,20 +31,18 @@ let imageFilesArray = [
 let clicks = 0;
 let views = 0;
 let votes = 0;
-let votesAllowed = 25;
+let votesAllowed = 10;
 const images = [];
 let numVisible = 3; //how many images to display in each set
 let indices = [];
 
-// const resultsContainer = document.getElementById('results-container');
 const startVotingButton = document.getElementById('start-voting-button');
 const viewResultsButton = document.getElementById('view-results-button');
 const resetButton = document.getElementById('reset-button');
-const resultsList = document.getElementById('results-list');
+// const resultsList = document.getElementById('results-list');
 
-// if(votes===votesAllowed){
-//   viewResultsButton.classList.remove('hidden');
-// }
+let resultsChart = document.getElementById('results-chart');
+let ctx = resultsChart.getContext('2d');
 
 // constructor for an image
 function Image(fileName) {
@@ -57,6 +55,7 @@ function Image(fileName) {
 for (let i = 0; i < imageFilesArray.length; i++) {
   images.push(new Image(imageFilesArray[i]));
 }
+
 
 function generateRandomNumbers() {
   let prevIndices = [];
@@ -84,6 +83,21 @@ function displayImages() {
   }
 }
 
+function clearImages() {
+  for (let i = 0; i < imageElementsArray.length; i++){
+    imageElementsArray[i].id = '';
+    imageElementsArray[i].src = '';
+  }
+}
+
+function show(element) {
+  element.classList.remove('hidden');
+}
+
+function hide(element) {
+  element.classList.add('hidden');
+}
+
 function handleClick(event) {
   console.log(votes);
   if(votes < votesAllowed){
@@ -96,29 +110,64 @@ function handleClick(event) {
     displayImages();}
   if(votes >= votesAllowed){
     viewResultsButton.classList.remove('hidden');
-    resetButton.remove('hidden');
+    resetButton.classList.remove('hidden');
   }
 }
 
 startVotingButton.addEventListener('click',function(){
-  // generateRandomNumbers();
   displayImages();
-  startVotingButton.classList.add('hidden');
+  hide(startVotingButton);
 }
 
 );
 
 viewResultsButton.addEventListener('click',function(){
-  viewResultsButton.classList.add('hidden');
-  for(let i = 0; i < images.length; i++){
-    let resultListItem = document.createElement('li');
-    resultListItem.appendChild(document.createTextNode(`${images[i].id} was displayed ${images[i].views} times and received ${images[i].clicks} votes`));
-    resultsList.appendChild(resultListItem);
-  }
-  // resetButton.classList.remove('hidden');
+  show(resetButton);
+  hide(viewResultsButton);
+  clearImages();
+  // for(let i = 0; i < images.length; i++){
+  //   let resultListItem = document.createElement('li');
+  //   resultListItem.appendChild(document.createTextNode(`${images[i].id} was displayed ${images[i].views} times and received ${images[i].clicks} votes`));
+  //   resultsList.appendChild(resultListItem);
+  // }
+  renderChart();
 }
 );
 
 resetButton.addEventListener('click',function(){
   window.location.reload();
 });
+
+function removeExtension(fileName) {
+  let label = fileName.slice(0,fileName.indexOf('.'));
+  return(label);
+}
+
+function renderChart() {
+  let clicksArray = [];
+  let viewsArray = [];
+  let labelsArray = [];
+
+  for(let i = 0; i < images.length; i++){
+    viewsArray.push(images[i].views);
+    clicksArray.push(images[i].clicks);
+    labelsArray.push(removeExtension(images[i].id));
+  }
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labelsArray,
+      datasets: [{
+        label: '# of Votes',
+        data: clicksArray,
+        backgroundColor: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
+      }, {
+        label: '# of Views',
+        data: viewsArray
+      }]
+    },
+  });
+
+}
+
