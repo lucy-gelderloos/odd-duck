@@ -1,2 +1,13 @@
 @import "reset.css";
 
+.hidden{
+    display:none;
+}
+
+.visible{
+    display:block;
+}
+
+#gallery-container{
+    display:flex;
+}
