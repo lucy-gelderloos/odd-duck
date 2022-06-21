@@ -83,14 +83,19 @@ function displayImages() {
 }
 
 function handleClick(event) {
-  for (let i = 0; i < images.length; i++) {
-    if (event.target.id === images[i].id) {
-      images[i].clicks++;
+  console.log(votes);
+  if(votes < votesAllowed){
+    for (let i = 0; i < images.length; i++) {
+      if (event.target.id === images[i].id) {
+        images[i].clicks++;
+      }
     }
     votes++;
-    console.log(images[i].id,images[i].clicks);
+    displayImages();}
+  if(votes >= votesAllowed){
+    viewResultsButton.classList.remove('hidden');
+    resetButton.remove('hidden');
   }
-  displayImages();
 }
 
 startVotingButton.addEventListener('click',function(){
