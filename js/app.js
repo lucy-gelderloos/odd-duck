@@ -41,8 +41,8 @@ const viewResultsButton = document.getElementById('view-results-button');
 const resetButton = document.getElementById('reset-button');
 // const resultsList = document.getElementById('results-list');
 
-let resultsChart = document.getElementById('results-chart');
-let ctx = resultsChart.getContext('2d');
+let chartCanvas = document.getElementById('results-chart');
+let ctx = chartCanvas.getContext('2d');
 
 // constructor for an image
 function Image(fileName) {
@@ -109,8 +109,8 @@ function handleClick(event) {
     votes++;
     displayImages();}
   if(votes >= votesAllowed){
-    viewResultsButton.classList.remove('hidden');
-    resetButton.classList.remove('hidden');
+    show(viewResultsButton);
+    show(resetButton);
   }
 }
 
@@ -124,12 +124,8 @@ startVotingButton.addEventListener('click',function(){
 viewResultsButton.addEventListener('click',function(){
   show(resetButton);
   hide(viewResultsButton);
+  show(chartCanvas);
   clearImages();
-  // for(let i = 0; i < images.length; i++){
-  //   let resultListItem = document.createElement('li');
-  //   resultListItem.appendChild(document.createTextNode(`${images[i].id} was displayed ${images[i].views} times and received ${images[i].clicks} votes`));
-  //   resultsList.appendChild(resultListItem);
-  // }
   renderChart();
 }
 );
@@ -161,10 +157,11 @@ function renderChart() {
       datasets: [{
         label: '# of Votes',
         data: clicksArray,
-        backgroundColor: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
+        backgroundColor: 'Green'
       }, {
         label: '# of Views',
-        data: viewsArray
+        data: viewsArray,
+        backgroundColor: 'Blue'
       }]
     },
   });
