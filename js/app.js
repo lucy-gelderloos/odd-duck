@@ -32,6 +32,7 @@ let clicks = 0;
 let views = 0;
 let votes = 0;
 let votesAllowed = 10;
+let votingRounds = 0;
 const images = [];
 let numVisible = 3; //how many images to display in each set
 let indices = [];
@@ -116,7 +117,6 @@ function handleClick(event) {
     hide(instructions);
     show(thanks);
     show(viewResultsButton);
-    show(retakeButton);
     clearImages();
   }
 }
@@ -134,8 +134,8 @@ viewResultsButton.addEventListener('click',function(){
   show(resetButton);
   hide(viewResultsButton);
   show(chartCanvas);
-  addToStorage();
-  clearImages();
+  addImagesToStorage();
+  countRounds();
   renderChart();
 }
 );
@@ -145,8 +145,10 @@ retakeButton.addEventListener('click',function(){
 });
 
 resetButton.addEventListener('click',function(){
-  return confirm('This will erase all votes. Are you sure?');
-
+  if(confirm('This will erase all votes. Are you sure?')){
+    localStorage.setItem('images',JSON.stringify([]));
+    hide(resetButton);
+  }
 });
 
 function removeExtension(fileName) {
@@ -185,7 +187,7 @@ function renderChart() {
 
 }
 
-function addToStorage(){
+function addImagesToStorage(){
   if (localStorage.getItem('images') !== null) {
     let prevImages = JSON.parse(localStorage.getItem('images'));
     for(let i = 0; i < prevImages.length; i++){
@@ -195,4 +197,11 @@ function addToStorage(){
   }
   const arrayString = JSON.stringify(images);
   localStorage.setItem('images', arrayString);
+}
+
+function countRounds(){
+  if(localStorage.getItem('votingRounds') !== null){
+    votingRounds += JSON.parse(localStorage.getItem('votingRounds'));
+  }
+  localStorage.setItem('votingRounds',JSON.stringify(votingRounds));
 }
