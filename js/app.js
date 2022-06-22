@@ -31,13 +31,14 @@ let imageFilesArray = [
 let clicks = 0;
 let views = 0;
 let votes = 0;
-let votesAllowed = 25;
+let votesAllowed = 10;
 const images = [];
 let numVisible = 3; //how many images to display in each set
 let indices = [];
 
 const startVotingButton = document.getElementById('start-voting-button');
 const viewResultsButton = document.getElementById('view-results-button');
+const retakeButton = document.getElementById('retake-button');
 const resetButton = document.getElementById('reset-button');
 const instructions = document.getElementById('instructions');
 const thanks = document.getElementById('thanks');
@@ -57,7 +58,6 @@ function Image(fileName) {
 for (let i = 0; i < imageFilesArray.length; i++) {
   images.push(new Image(imageFilesArray[i]));
 }
-
 
 function generateRandomNumbers() {
   let prevIndices = [];
@@ -116,7 +116,7 @@ function handleClick(event) {
     hide(instructions);
     show(thanks);
     show(viewResultsButton);
-    show(resetButton);
+    show(retakeButton);
     clearImages();
   }
 }
@@ -130,16 +130,23 @@ startVotingButton.addEventListener('click',function(){
 );
 
 viewResultsButton.addEventListener('click',function(){
+  show(retakeButton);
   show(resetButton);
   hide(viewResultsButton);
   show(chartCanvas);
+  addToStorage();
   clearImages();
   renderChart();
 }
 );
 
-resetButton.addEventListener('click',function(){
+retakeButton.addEventListener('click',function(){
   window.location.reload();
+});
+
+resetButton.addEventListener('click',function(){
+  return confirm('This will erase all votes. Are you sure?');
+
 });
 
 function removeExtension(fileName) {
@@ -151,6 +158,8 @@ function renderChart() {
   let clicksArray = [];
   let viewsArray = [];
   let labelsArray = [];
+
+  JSON.parse(localStorage.getItem('images'));
 
   for(let i = 0; i < images.length; i++){
     viewsArray.push(images[i].views);
@@ -176,3 +185,14 @@ function renderChart() {
 
 }
 
+function addToStorage(){
+  if (localStorage.getItem('images') !== null) {
+    let prevImages = JSON.parse(localStorage.getItem('images'));
+    for(let i = 0; i < prevImages.length; i++){
+      images[i].clicks += prevImages[i].clicks;
+      images[i].views += prevImages[i].clicks;
+    }
+  }
+  const arrayString = JSON.stringify(images);
+  localStorage.setItem('images', arrayString);
+}
