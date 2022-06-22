@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Odd Duck Product Survey</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"
+        integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </head>
+    <body>
+        <header>
+            <!-- <img src="https://place-hold.it/200x70/000" alt="logo" /> -->
+            <h1>Odd Duck Product Survey</h1>
+        </header>
+        <main>
+            <div id="intro">
+                <p id="instructions" class="hidden">Click the product you think we should produce next!</p>
+                <p id="thanks" class="hidden">Thanks for participating in our product survey!</p>
+            </div>
+            <div id="buttons-container">
+                <button id="start-voting-button" >Start Voting!</button>
+                <button id="view-results-button" class="hidden">View Results</button>
+                <button id="reset-button" class="hidden">Reset</button>
+            </div>
+            <div id="gallery-container">
+                <img class="product-image hidden" />
+                <img class="product-image hidden" />
+                <img class="product-image hidden" />
+            </div>
+            <div id="content-container">
+                <canvas id="results-chart" class="hidden"></canvas>
+            </div>
+
+        </main>
+        <footer>
+            <script type="text/javascript" src="js/app.js"></script>
+        </footer>
+    </body>
+</html>
