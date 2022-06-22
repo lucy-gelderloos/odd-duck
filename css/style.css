@@ -1,5 +1,54 @@
 @import "reset.css";
 
+body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width:75%;
+    margin:auto;
+}
+
+h1 {
+    font-size:3em;
+    font-weight:bold;
+    margin:10px auto;
+    text-align:center;
+}
+
+button {
+    background-color: lightskyblue;
+    margin:10px auto;
+    padding:10px;
+    border:none;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color:rgb(40, 167, 246);
+    cursor: pointer;
+}
+
+#intro p {
+    margin: 20px auto;
+    width:60%;
+    text-align: center;
+}
+
+#buttons-container {
+    display: flex;
+    width:50%;
+    margin:auto;
+}
+
+.product-image{
+    object-fit: contain;
+    width: 225px;
+    height: 225px;
+}
+
+.product-image:hover{
+    cursor:pointer;
+}
+
 .hidden{
     display:none;
 }
@@ -10,4 +59,6 @@
 
 #gallery-container{
     display:flex;
+    justify-content: space-between;
+    margin: 0 auto;
 }

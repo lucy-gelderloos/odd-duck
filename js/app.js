@@ -31,7 +31,7 @@ let imageFilesArray = [
 let clicks = 0;
 let views = 0;
 let votes = 0;
-let votesAllowed = 10;
+let votesAllowed = 25;
 const images = [];
 let numVisible = 3; //how many images to display in each set
 let indices = [];
@@ -39,6 +39,8 @@ let indices = [];
 const startVotingButton = document.getElementById('start-voting-button');
 const viewResultsButton = document.getElementById('view-results-button');
 const resetButton = document.getElementById('reset-button');
+const instructions = document.getElementById('instructions');
+const thanks = document.getElementById('thanks');
 // const resultsList = document.getElementById('results-list');
 
 let chartCanvas = document.getElementById('results-chart');
@@ -79,6 +81,7 @@ function displayImages() {
     let index = indices[i];
     imageElementsArray[i].id = images[index].id;
     imageElementsArray[i].src = images[index].src;
+    imageElementsArray[i].classList.remove('hidden');
     images[index].views++;
   }
 }
@@ -87,6 +90,7 @@ function clearImages() {
   for (let i = 0; i < imageElementsArray.length; i++){
     imageElementsArray[i].id = '';
     imageElementsArray[i].src = '';
+    imageElementsArray[i].classList.add('hidden');
   }
 }
 
@@ -109,14 +113,18 @@ function handleClick(event) {
     votes++;
     displayImages();}
   if(votes >= votesAllowed){
+    hide(instructions);
+    show(thanks);
     show(viewResultsButton);
     show(resetButton);
+    clearImages();
   }
 }
 
 startVotingButton.addEventListener('click',function(){
   displayImages();
   hide(startVotingButton);
+  show(instructions);
 }
 
 );
@@ -157,11 +165,11 @@ function renderChart() {
       datasets: [{
         label: '# of Votes',
         data: clicksArray,
-        backgroundColor: 'Green'
+        backgroundColor: 'rgb(15, 67, 99)'
       }, {
         label: '# of Views',
         data: viewsArray,
-        backgroundColor: 'Blue'
+        backgroundColor: 'lightskyblue'
       }]
     },
   });
