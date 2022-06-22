@@ -31,7 +31,7 @@ let imageFilesArray = [
 let clicks = 0;
 let views = 0;
 let votes = 0;
-let votesAllowed = 10;
+let votesAllowed = 25;
 let votingRounds = 0;
 const images = [];
 let numVisible = 3; //how many images to display in each set
@@ -45,8 +45,8 @@ const instructions = document.getElementById('instructions');
 const thanks = document.getElementById('thanks');
 // const resultsList = document.getElementById('results-list');
 
-let chartCanvas = document.getElementById('results-chart');
-let ctx = chartCanvas.getContext('2d');
+const chartCanvas = document.getElementById('results-chart');
+const ctx = chartCanvas.getContext('2d');
 
 // constructor for an image
 function Image(fileName) {
@@ -145,9 +145,9 @@ retakeButton.addEventListener('click',function(){
 });
 
 resetButton.addEventListener('click',function(){
-  if(confirm('This will erase all votes. Are you sure?')){
+  if(confirm('This will erase all vote data. Are you sure?')){
     localStorage.setItem('images',JSON.stringify([]));
-    hide(resetButton);
+    window.location.reload();
   }
 });
 
